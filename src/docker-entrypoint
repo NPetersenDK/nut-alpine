@@ -1,0 +1,57 @@
+#!/bin/sh
+set -e
+
+# Generate msmtp configuration
+cat > /etc/msmtprc << EOF
+# Set default values for all following accounts.
+defaults
+auth           on
+tls            on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile        /var/log/msmtp.log
+
+# Mail account configuration
+account        default
+host           ${SMTP_HOST}
+port           ${SMTP_PORT}
+from           ${SMTP_FROM}
+user           ${SMTP_USER}
+password       ${SMTP_PASS}
+EOF
+
+# Generate notify.conf with environment variables
+cat > /etc/nut/notify.conf << EOF
+NOTIFY_FROM="${NOTIFY_FROM}"
+NOTIFY_TO="${NOTIFY_TO}"
+EOF
+
+# Create required directories with correct permissions
+mkdir -p /var/run/nut /run
+chown -R nut:nut /var/run/nut /run /etc/nut /etc/msmtprc
+chmod 750 /var/run/nut /run /etc/nut
+chmod 640 /etc/nut/* /etc/msmtprc
+chmod 755 /etc/nut/notifycmd.sh
+
+# Fix USB permissions
+if [ -d "/dev/bus/usb" ]; then
+    chgrp -R nut /dev/bus/usb
+    chmod -R g+rw /dev/bus/usb
+fi
+
+# Send startup notification
+{
+    echo "From: ${NOTIFY_FROM}"
+    echo "To: ${NOTIFY_TO}"
+    echo "Subject: NUT Service Started"
+    echo
+    echo "NUT service has been started"
+} | msmtp "${NOTIFY_TO}"
+
+# Start the UPS driver
+/usr/sbin/upsdrvctl start
+
+# Start the UPS daemon
+/usr/sbin/upsd
+
+# Start upsmon in foreground mode
+exec /usr/sbin/upsmon -D

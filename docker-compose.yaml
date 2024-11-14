@@ -1,0 +1,21 @@
+services:
+  nut:
+    image: dartsteven/alpine-nut:1.0
+    container_name: Nut-Server
+    privileged: true
+    environment:
+      - TZ=Europe/Rome
+      - NOTIFY_FROM=${NOTIFY_FROM:-your-email@example.com}
+      - NOTIFY_TO=${NOTIFY_TO:-your-email@example.com}
+      - SMTP_HOST=${SMTP_HOST:-smtp.gmail.com}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER:-your-email@gmail.com}
+      - SMTP_PASS=${SMTP_PASS:-your-app-specific-password}
+      - SMTP_FROM=${SMTP_FROM:-your-email@gmail.com}
+    ports:
+      - 3493:3493
+    devices:
+      - /dev/bus/usb:/dev/bus/usb:rw
+    volumes:
+      - ./config/nut:/etc/nut:rw
+    restart: always

@@ -1,0 +1,9 @@
+[admin]
+password = adminpass
+actions = SET
+instcmds = ALL
+
+[monuser]
+password = monpass
+upsmon primary
+ 
