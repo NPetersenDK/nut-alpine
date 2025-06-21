@@ -1,6 +1,6 @@
 services:
   nut:
-    image: niko/nut:v0.1
+    image: image: ghcr.io/npetersendk/nut-alpine:latest
     container_name: Nut-Server
     privileged: true
     env_file:
