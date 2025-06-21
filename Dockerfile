@@ -3,14 +3,13 @@
 FROM alpine:edge AS builder
 
 # Set environment variable
-ENV NUT_VERSION=2.8.2
+ENV NUT_VERSION=2.8.3
 
 # Install dependencies and build NUT
 RUN set -ex; \
     apk add --no-cache \
         openssh-client \
-        libusb-compat \
-        msmtp; \
+        libusb-compat; \
     apk add --no-cache --virtual .build-deps \
         libusb-compat-dev \
         build-base; \
@@ -40,18 +39,18 @@ RUN set -ex; \
     apk del .build-deps
 
 # Create necessary directories
-RUN mkdir -p /etc/mail /var/run /run && \
-    chown -R nut:nut /etc/mail /var/run /run && \
-    chmod -R 750 /etc/mail /var/run /run
+RUN mkdir -p /var/run /run && \
+    chown -R nut:nut /var/run /run && \
+    chmod -R 750 /var/run /run
 
 # Copy the entrypoint script
-COPY src/docker-entrypoint /usr/local/bin/
+COPY src/docker-entrypoint /docker-entrypoint
 
 # Make the entrypoint script executable
-RUN chmod +x /usr/local/bin/docker-entrypoint
+RUN chmod +x /docker-entrypoint
 
 # Set the entrypoint
-ENTRYPOINT ["docker-entrypoint"]
+ENTRYPOINT ["/docker-entrypoint"]
 
 # Set the working directory
 WORKDIR /var/run/nut
@@ -60,4 +59,4 @@ WORKDIR /var/run/nut
 EXPOSE 3493/tcp
 
 # Add a maintainer label
-LABEL maintainer="DartSteven <DartSteven@icloud.com>"
+LABEL maintainer="NPetersen <git@nipetersen.dk>"
