@@ -21,19 +21,13 @@ A Docker container running Network UPS Tools (NUT) server with email Discord Web
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/DartSteven/alpine-nut.git
+    git clone https://github.com/NPetersenDK/alpine-nut.git
     cd alpine-nut
     ```
 
 2. Create a `.env` file with your email configuration:
     ```env
-    NOTIFY_FROM=your-email@example.com
-    NOTIFY_TO=your-email@example.com
-    SMTP_HOST=smtp.gmail.com
-    SMTP_PORT=587
-    SMTP_USER=your-email@gmail.com
-    SMTP_PASS=your-app-specific-password
-    SMTP_FROM=your-email@gmail.com
+    DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/your-webhook-id/your-webhook-token
     ```
 
 3. Start the container:
@@ -47,13 +41,7 @@ A Docker container running Network UPS Tools (NUT) server with email Discord Web
 
 | Variable     | Description                             | Default                  |
 |--------------|-----------------------------------------|--------------------------|
-| NOTIFY_FROM  | Email address for sending notifications | your-email@example.com   |
-| NOTIFY_TO    | Email address to receive notifications  | your-email@example.com   |
-| SMTP_HOST    | SMTP server hostname                    | smtp.gmail.com           |
-| SMTP_PORT    | SMTP server port                        | 587                      |
-| SMTP_USER    | SMTP username                           | your-email@gmail.com     |
-| SMTP_PASS    | SMTP password or app-specific password  | your-app-specific-password |
-| SMTP_FROM    | Email address shown in From field       | your-email@gmail.com     |
+| DISCORD_WEBHOOK_URL  | URL for Discord Webhook | Non-Default, Required.   |
 
 ### NUT Configuration
 
@@ -140,6 +128,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Author
 
 DartSteven (DartSteven@icloud.com)
+NPetersenDK (git@nipetersen.dk)
 
 ## Support
 
