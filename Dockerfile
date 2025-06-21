@@ -9,7 +9,8 @@ ENV NUT_VERSION=2.8.3
 RUN set -ex; \
     apk add --no-cache \
         openssh-client \
-        libusb-compat; \
+        libusb-compat \
+        curl; \
     apk add --no-cache --virtual .build-deps \
         libusb-compat-dev \
         build-base; \
@@ -44,13 +45,13 @@ RUN mkdir -p /var/run /run && \
     chmod -R 750 /var/run /run
 
 # Copy the entrypoint script
-COPY src/docker-entrypoint /docker-entrypoint
+COPY src/docker-entrypoint /usr/local/bin/
 
 # Make the entrypoint script executable
-RUN chmod +x /docker-entrypoint
+RUN chmod +x /usr/local/bin/docker-entrypoint
 
 # Set the entrypoint
-ENTRYPOINT ["/docker-entrypoint"]
+ENTRYPOINT ["docker-entrypoint"]
 
 # Set the working directory
 WORKDIR /var/run/nut

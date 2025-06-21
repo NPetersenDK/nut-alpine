@@ -1,8 +1,10 @@
 services:
   nut:
-    image: dartsteven/alpine-nut:1.0
+    image: niko/nut:v0.1
     container_name: Nut-Server
     privileged: true
+    env_file:
+      - .env
     environment:
       - TZ=Europe/Rome
     ports:

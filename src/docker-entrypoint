@@ -14,6 +14,8 @@ if [ -d "/dev/bus/usb" ]; then
     chmod -R g+rw /dev/bus/usb
 fi
 
+NOTIFYTYPE=DOCKERONLINE sh /etc/nut/notifycmd.sh
+
 # Start the UPS driver
 /usr/sbin/upsdrvctl start
 
