@@ -1,24 +1,21 @@
 
-# Docker NUT Server with Email Notifications
+# Docker NUT Server with Discord Notifications
 
-A Docker container running Network UPS Tools (NUT) server with email notification support. This container allows you to monitor your UPS (Uninterruptible Power Supply) and receive email notifications for various UPS events.
+A Docker container running Network UPS Tools (NUT) server with email Discord Webhooks Support. This container allows you to monitor your UPS (Uninterruptible Power Supply) and receive events for various UPS events.
 
 ## Features
-
 - NUT server running on Alpine Linux
-- Email notifications for UPS events
+- Discord notifications for UPS events
 - USB UPS support
 - Automatic permission handling
-- SMTP support (including Gmail)
 - Startup notification
 - Configurable monitoring parameters
 
 ## Prerequisites
-
 - Docker
 - Docker Compose
 - A USB UPS device
-- SMTP server access (for notifications)
+- A Discord webhook URL
 
 ## Quick Start
 
